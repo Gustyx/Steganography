@@ -1,9 +1,6 @@
 import cv2
 import numpy as np
-
-path_to_original_image = "images/original/"
-path_to_stego_image = "images/stego/"
-path_to_difference_image = "images/difference/"
+from ImagePaths import *
 
 # Function to embed data
 def embed_data(image, secret_data):
