@@ -17,6 +17,8 @@ def embed_data(image, secret_data):
                     data_index += 1
     return image
 
+
+
 # Function to extract data
 def extract_data(stego_image, data_length):
     binary_secret = ''
@@ -86,5 +88,5 @@ def calculate_difference_lsb(image_name):
     cv2.destroyAllWindows()
 
 image_name = "sid.png"
-# apply_lsb(image_name)
-# calculate_difference_lsb(image_name)
+apply_lsb(image_name)
+calculate_difference_lsb(image_name)
