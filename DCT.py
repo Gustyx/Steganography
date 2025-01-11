@@ -4,7 +4,7 @@ import numpy as np
 from Greyscale import convert_to_grayscale
 from ImagePaths import *
 
-def pad_image(image):
+def pad_image_8x8(image):
     """
     Pad the image so that both height and width are divisible by 8.
 
@@ -58,7 +58,7 @@ def embed_message_dct_grayscale(image, secret_message):
                 image[row:row + 8, col:col + 8] = np.uint8(np.clip(idct_block, 0, 255))
                 idx += 1
 
-    cv2.imwrite(path_to_stego_image + "_stego_dct_" + "sid.jpg", image, [cv2.IMWRITE_JPEG_QUALITY, 95])
+    cv2.imwrite(path_to_stego_image + "_stego_dct_" + "sid.jpg", image)
     # print(f"Message embedded and saved to {output_path}")
     return image
 
@@ -92,7 +92,7 @@ def apply_dct(image_name):
     image = cv2.imread(path_to_original_image + image_name)
 
     # Pad image
-    padded_image = pad_image(image.copy())
+    padded_image = pad_image_8x8(image.copy())
 
     # Grayscale image
     grayscale_image = convert_to_grayscale(padded_image)
@@ -115,3 +115,4 @@ def apply_dct(image_name):
 
 image_name = "sid.jpg"
 apply_dct(image_name)
+
