@@ -49,7 +49,7 @@ def resize_image_to_fit(image, target_size):
 
 
 # Example usage
-embedded_image = cv2.imread("images/original/sid.jpg")
-resized_image = resize_image_to_fit(embedded_image, (700, 400))
+# embedded_image = cv2.imread("images/original/sid.jpg")
+# resized_image = resize_image_to_fit(embedded_image, (700, 400))
 
-cv2.imwrite("resize_sid.jpg", resized_image)
+# cv2.imwrite("resize_sid.jpg", resized_image)
