@@ -30,30 +30,26 @@ def resize_image_to_fit(image, target_size):
     target_width, target_height = target_size
     h, w = image.shape[:2]
 
-    print(w,h)
-    print(target_width,target_height)
-    if h > target_height or w > target_width:
-        print("resize")
-        scaling_factor = min(target_height / h, target_width / w)
-        new_height = int(h * scaling_factor)
-        new_width = int(w * scaling_factor)
+    # if h > target_height or w > target_width:
+    scaling_factor = min(target_height / h, target_width / w)
+    new_height = int(h * scaling_factor)
+    new_width = int(w * scaling_factor)
 
-        # Resize the image
-        resized_image = cv2.resize(image, (new_width, new_height), interpolation=cv2.INTER_AREA)
+    # Resize the image
+    resized_image = cv2.resize(image, (new_width, new_height), interpolation=cv2.INTER_AREA)
 
-        if new_width == target_width and new_height == target_height:
-            return resized_image
-        else:
-            padded_image = pad_image_to_fit(resized_image.copy(), target_size)
-        return padded_image
+    if new_width == target_width and new_height == target_height:
+        return resized_image
     else:
-        print("pad")
-        padded_image = pad_image_to_fit(image.copy(), target_size)
-        return padded_image
+        padded_image = pad_image_to_fit(resized_image.copy(), target_size)
+    return padded_image
+    # else:
+    #     padded_image = pad_image_to_fit(image.copy(), target_size)
+    #     return padded_image
 
 
 # Example usage
 embedded_image = cv2.imread("images/original/sid.jpg")
-resized_image = resize_image_to_fit(embedded_image, (500, 400))
+resized_image = resize_image_to_fit(embedded_image, (700, 400))
 
 cv2.imwrite("resize_sid.jpg", resized_image)
