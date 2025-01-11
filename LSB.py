@@ -1,9 +1,6 @@
 import cv2
 import numpy as np
-
-path_to_original_image = "images/original/"
-path_to_stego_image = "images/stego/"
-path_to_difference_image = "images/difference/"
+from ImagePaths import *
 
 # Function to embed data
 def embed_data(image, secret_data):
@@ -67,7 +64,7 @@ def apply_lsb(image_name):
     stego_image = embed_data(image.copy(), 'Hello, Steganography!'*200)
 
     # Save stego image
-    cv2.imwrite(path_to_stego_image + "stego_" + image_name, stego_image)
+    cv2.imwrite(path_to_stego_image + "stego_lsb_" + image_name, stego_image)
 
     # Extract data
     retrieved_data = extract_data(stego_image, len('Hello, Steganography!'*200))
@@ -76,13 +73,13 @@ def apply_lsb(image_name):
 def calculate_difference_lsb(image_name):
     # Load the images
     original_image = cv2.imread(path_to_original_image + image_name)
-    stego_image = cv2.imread(path_to_stego_image + "stego_" + image_name)
+    stego_image = cv2.imread(path_to_stego_image + "stego_lsb_" + image_name)
 
     # Compute the difference
     difference_image = compute_difference(original_image, stego_image)
 
     # Save and display the difference image
-    cv2.imwrite(path_to_difference_image + "difference_" + image_name, difference_image)
+    cv2.imwrite(path_to_difference_image + "difference_lsb_" + image_name, difference_image)
     cv2.imshow("Difference Image", difference_image)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
