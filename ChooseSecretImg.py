@@ -13,7 +13,7 @@ from tkinter import messagebox
 import tkinter.font
 
 
-def chooseImg(updateChosenImageCallback):
+def chooseSecretImg(showSecretImg):
     extra_window = tkinter.Toplevel()
 
     app = extra_window
@@ -47,7 +47,7 @@ def chooseImg(updateChosenImageCallback):
         savedPath = f"./Images/{randomText}.{filenameSplitted[1]}"
         os.makedirs("./Images", exist_ok=True)
         shutil.copy(filename, savedPath)
-        updateChosenImageCallback(savedPath)
+        showSecretImg(savedPath)
         messagebox.showinfo("Success", "Uploaded Successfully")
         extra_window.destroy()
 
