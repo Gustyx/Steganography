@@ -1,5 +1,6 @@
 import cv2
 from ImagePaths import *
+from imageManipulator import compute_difference
 
 
 def embed_data(image, secret_data):
@@ -35,27 +36,6 @@ def extract_data(stego_image):
     return secret_data
 
 
-def compute_difference(image1, image2):
-    # Ensure both images are the same size
-    if image1.shape != image2.shape:
-        raise ValueError("Images must have the same dimensions for comparison.")
-
-    # Convert images to grayscale for simplicity
-    if len(image1.shape) == 3:  # Convert RGB to Grayscale
-        gray1 = cv2.cvtColor(image1, cv2.COLOR_BGR2GRAY)
-        gray2 = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
-    else:
-        gray1, gray2 = image1, image2
-
-    # Compute the absolute difference
-    difference = cv2.absdiff(gray1, gray2)
-
-    # Threshold the difference to make it binary
-    _, binary_difference = cv2.threshold(difference, 0, 255, cv2.THRESH_BINARY)
-
-    return binary_difference
-
-
 def apply_lsb(image_name):
     # Load the image
     image = cv2.imread(path_to_original_image + image_name)
@@ -70,21 +50,8 @@ def apply_lsb(image_name):
     print("Retrieved Data:", retrieved_data)
 
 
-def calculate_difference_lsb(image_name):
-    # Load the images
-    original_image = cv2.imread(path_to_original_image + image_name)
-    stego_image = cv2.imread(path_to_stego_image + "lsb_" + image_name)
-
-    # Compute the difference
-    difference_image = compute_difference(original_image, stego_image)
-
-    # Save and display the difference image
-    cv2.imwrite(path_to_difference_image + "difference_lsb_" + image_name, difference_image)
-    cv2.imshow("Difference Image", difference_image)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
-
-
 image_name = "sid.jpg"
-apply_lsb(image_name)
-# calculate_difference_lsb(image_name)
+# apply_lsb(image_name)
+image1 = cv2.imread(path_to_original_image + image_name)
+image2 = cv2.imread(path_to_stego_image + "dct_color_" + image_name)
+compute_difference(image1, image2)
