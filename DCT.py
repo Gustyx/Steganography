@@ -3,16 +3,8 @@ import numpy as np
 
 from ImagePaths import *
 
+
 def pad_image_8x8(image):
-    """
-    Pad the image so that both height and width are divisible by 8.
-
-    Args:
-        image (numpy.ndarray): The input image.
-
-    Returns:
-        numpy.ndarray: Padded image.
-    """
     h, w = image.shape[:2]
 
     # Calculate padding amounts
@@ -50,6 +42,7 @@ def embed_message_dct_grayscale(image, secret_message):
 
     return image
 
+
 def extract_message_dct_grayscale(image):
     h, w = image.shape
     binary_message = ''
@@ -70,15 +63,8 @@ def extract_message_dct_grayscale(image):
 
     return secret_message
 
+
 def embed_message_dct_color(image, secret_message):
-    """
-    Embed a secret message in a color image using DCT.
-    Args:
-        image (numpy.ndarray): Input color image (BGR format).
-        secret_message (str): Message to embed.
-    Returns:
-        numpy.ndarray: Image with the embedded message.
-    """
     h, w, _ = image.shape
     binary_message = ''.join([format(ord(ch), '08b') for ch in secret_message]) + '11111111'  # End marker
     idx = 0
@@ -117,14 +103,8 @@ def embed_message_dct_color(image, secret_message):
 
     return stego_image
 
+
 def extract_message_dct_color(image):
-    """
-    Extract a secret message from a color image using DCT.
-    Args:
-        image (numpy.ndarray): Image with the embedded message.
-    Returns:
-        str: Extracted secret message.
-    """
     h, w, _ = image.shape
     binary_message = ''
 
@@ -167,6 +147,7 @@ def apply_dct_grayscale(image_name):
     # Extract data
     retrieved_data = extract_message_dct_grayscale(stego_image)
     print("Retrieved Data:", retrieved_data)
+
 
 def apply_dct_color(image_name):
     # Load the image
