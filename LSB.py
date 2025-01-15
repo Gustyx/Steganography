@@ -4,7 +4,7 @@ from imageManipulator import compute_difference
 
 
 def embed_data(image, secret_data):
-    binary_secret = ''.join(format(ord(char), '08b') for char in secret_data) + '011111111'
+    binary_secret = ''.join(format(ord(char), '08b') for char in secret_data) + '01111111'
     data_index = 0
     for row in image:
         for pixel in row:
@@ -24,14 +24,14 @@ def extract_data(stego_image):
         for pixel in row:
             for channel in range(3):  # Read RGB channels
                 binary_secret += format(pixel[channel], '08b')[-1]
-                if binary_secret.endswith('011111111'):
+                if binary_secret.endswith('01111111'):
                     break
-            if binary_secret.endswith('011111111'):
+            if binary_secret.endswith('01111111'):
                 break
-        if binary_secret.endswith('011111111'):
+        if binary_secret.endswith('01111111'):
             break
 
-    binary_secret = binary_secret[:-9]
+    binary_secret = binary_secret[:-8]
     secret_data = ''.join(chr(int(binary_secret[i:i+8], 2)) for i in range(0, len(binary_secret), 8))
     return secret_data
 
@@ -41,7 +41,7 @@ def apply_lsb(image_name):
     image = cv2.imread(path_to_original_image + image_name)
 
     # Embed data
-    stego_image = embed_data(image.copy(), 'Hello, Steganography!\n' * 3)
+    stego_image = embed_data(image.copy(), 'Hello, Steganography!\n' * 2)
 
     image2 = cv2.imread(path_to_stego_image + 'lsb_' + image_name)
 
@@ -50,8 +50,8 @@ def apply_lsb(image_name):
     print("Retrieved Data:", retrieved_data)
 
 
-image_name = "sid.jpg"
-# apply_lsb(image_name)
+image_name = "sid.png"
+apply_lsb(image_name)
 image1 = cv2.imread(path_to_original_image + image_name)
-image2 = cv2.imread(path_to_stego_image + "dct_color_" + image_name)
+image2 = cv2.imread(path_to_stego_image + "lsb_" + image_name)
 compute_difference(image1, image2)
