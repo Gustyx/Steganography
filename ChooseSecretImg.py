@@ -7,8 +7,6 @@ import tkinter as tk
 from PIL import ImageTk, Image
 import os
 import shutil
-import random
-import string
 from tkinter import messagebox
 import tkinter.font
 
@@ -42,9 +40,7 @@ def chooseSecretImg(showSecretImg):
         setPreviewPic(filename)
 
     def savePic():
-        filenameSplitted = filename.split('.')
-        randomText = ''.join((random.choice(string.ascii_lowercase) for x in range(12)))
-        savedPath = f"./Images/{randomText}.{filenameSplitted[1]}"
+        savedPath = f"./Images/{os.path.basename(filename)}"
         os.makedirs("./Images", exist_ok=True)
         shutil.copy(filename, savedPath)
         showSecretImg(savedPath)

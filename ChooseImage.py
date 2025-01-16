@@ -42,9 +42,7 @@ def chooseImg(updateChosenImageCallback):
         setPreviewPic(filename)
 
     def savePic():
-        filenameSplitted = filename.split('.')
-        randomText = ''.join((random.choice(string.ascii_lowercase) for x in range(12)))
-        savedPath = f"./Images/{randomText}.{filenameSplitted[1]}"
+        savedPath = f"./Images/{os.path.basename(filename)}"
         os.makedirs("./Images", exist_ok=True)
         shutil.copy(filename, savedPath)
         updateChosenImageCallback(savedPath)
